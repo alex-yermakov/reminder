@@ -1,12 +1,13 @@
-const gulp = require('gulp');
-const rimraf = require('rimraf');
-const sass = require('gulp-sass');
-const babel= require('gulp-babel');
-const inject = require('gulp-inject');
-const httpProxy = require('http-proxy');
-const wiredep = require('wiredep').stream;
+const gulp        = require('gulp');
+const rimraf      = require('rimraf');
+const sass        = require('gulp-sass');
+const babel       = require('gulp-babel');
+const httpProxy   = require('http-proxy');
+const concat      = require('gulp-concat');
+const inject      = require('gulp-inject');
 const runSequence = require('run-sequence');
-const sourceMaps = require('gulp-sourcemaps');
+const wiredep     = require('wiredep').stream;
+const sourceMaps  = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
 
 gulp.task('compile:es6', () => {
@@ -25,10 +26,23 @@ gulp.task('compile:sass', () => {
     .pipe(gulp.dest('./dist/app'));
 });
 
-gulp.task('compile', ['compile:es6', 'compile:sass']);
+gulp.task('compile:react', () => {
+  gulp.src('./app/**/*.jsx')
+    .pipe(sourceMaps.init())
+    .pipe(babel())
+    .pipe(concat('react.js'))
+    .pipe(sourceMaps.write())
+    .pipe(gulp.dest('./dist/app'));
+});
+
+gulp.task('compile', ['compile:es6', 'compile:react', 'compile:sass']);
 
 gulp.task('watch:js', () => {
   return gulp.watch('./app/**/*.js', ['compile:es6']);
+});
+
+gulp.task('watch:react', () => {
+  return gulp.watch('./app/**/*.jsx', ['compile:react']);
 });
 
 gulp.task('watch:sass', () => {
@@ -43,7 +57,7 @@ gulp.task('watch:index', () => {
   return gulp.watch(['./index.html'], ['copy:index']);
 });
 
-gulp.task('watch', ['watch:js', 'watch:sass', 'watch:html', 'watch:index']);
+gulp.task('watch', ['watch:js', 'watch:react', 'watch:sass', 'watch:html', 'watch:index']);
 
 gulp.task('inject:js', () => {
   return gulp.src('./index.html')

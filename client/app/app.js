@@ -5,5 +5,4 @@ angular
   ])
 
   .config(() => {
-    console.log('Hi!');
   });
