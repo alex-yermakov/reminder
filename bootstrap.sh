@@ -35,10 +35,6 @@ echo "source /home/vagrant/project/env/bin/activate" >> ~/.profile;
 echo "cd ~/project/server" >> ~/.profile;
 
 
-# Requirements
-/home/vagrant/project/env/bin/pip install -r /home/vagrant/project/requirements/django.txt;
-
-
 # Add redis
 sudo add-apt-repository ppa:chris-lea/redis-server -y;
 
@@ -56,4 +52,21 @@ sudo su - postgres -c "createuser -s vagrant";
 createdb -Eutf-8 -l en_US.UTF-8 -T template0 project;
 
 
-echo "It's okay!"
+# NodeJS + dependencies
+curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo npm i bower gulp -g
+npm i
+bower install
+
+
+# Other
+cd /home/vagrant/project/server
+../env/bin/pip install -r /home/vagrant/project/requirements/django.txt;
+python manage.py migrate
+python manage.py createsuperuser --username root --email root@test.com --password root
+
+echo -e "It's okay!\n"
+echo "Run server with python manage.py runserver 0.0.0.0:9000"
+echo "Run client with cd ../client && gulp serve"
+echo -e "\nGood luck! ;)"

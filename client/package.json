@@ -1,0 +1,29 @@
+{
+  "name": "reminder",
+  "version": "0.0.1",
+  "description": "System of automated notifications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Off",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-es2016": "^6.16.0",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "browser-sync": "^2.17.3",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-inject": "^4.1.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^1.7.3",
+    "http-proxy": "^1.15.1",
+    "rimraf": "^2.5.4",
+    "run-sequence": "^1.2.2",
+    "wiredep": "^4.0.0"
+  }
+}
